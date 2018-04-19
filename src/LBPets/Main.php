@@ -37,7 +37,7 @@ class Main extends PluginBase implements Listener {
      *
      * @return null
      */
-    public function onLoad() {
+    public function onLoad(): void {
         $this->getLogger()->info(TextFormat::WHITE . "Loaded");
     }
 
@@ -46,7 +46,7 @@ class Main extends PluginBase implements Listener {
      *
      * @return null
      */
-    public function onEnable() {
+    public function onEnable(): void {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->saveDefaultConfig();
         $this->reloadConfig();
@@ -84,7 +84,7 @@ class Main extends PluginBase implements Listener {
      * @param  array         $args    An array of arguments
      * @return boolean                True allows the command to go through, false sends an error
      */
-    public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool{
         $subcommand = strtolower(array_shift($args));
         switch ($subcommand) {
             case "give";
@@ -194,7 +194,7 @@ class Main extends PluginBase implements Listener {
      * @param  string $pet      The pet to give (The class name)
      * @return boolean          Whether or not giving the pet was successful
      */
-    public function givePet($user = '', $pet = '') {
+    public function givePet(string $user = '', string $pet = ''): bool{
         if(($player = $this->getServer()->getPlayerExact($user)) instanceof Player) {
             if(!isset($this->pets[$player->getDisplayName()])) {
                 $this->pets[$player->getDisplayName()] = PetsManager::createPet($player, $pet);
@@ -213,7 +213,7 @@ class Main extends PluginBase implements Listener {
      * @param  boolean $unset Whether or not to unset the user from the config
      * @return boolean        Whether or not the removal was successful
      */
-    public function removePet($user = '', $unset = false) {
+    public function removePet(string $user = '', bool $unset = false): bool {
         if(($player = $this->getServer()->getPlayerExact($user)) instanceof Player) {
             if(isset($this->pets[$player->getDisplayName()])) {
                 $this->pets[$player->getDisplayName()]->fastClose();
@@ -233,7 +233,7 @@ class Main extends PluginBase implements Listener {
      * @param  string $user The name of the user to find their pet
      * @return boolean      Whether the find was successful
      */
-    public function findPet($user = '') {
+    public function findPet(string $user = ''): bool {
         if(($player = $this->getServer()->getPlayerExact($user)) instanceof Player) {
             if(isset($this->pets[$player->getDisplayName()])) {
                 $this->pets[$player->getDisplayName()]->returnToOwner();
@@ -248,7 +248,7 @@ class Main extends PluginBase implements Listener {
      *
      * @return null
      */
-    public function onDisable() {
+    public function onDisable(): void {
         $this->getConfig()->set('users', $this->players);
         $this->getConfig()->save();
 
