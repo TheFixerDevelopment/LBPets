@@ -31,7 +31,7 @@ class OcelotPet extends Pets {
 	 *
 	 * @return string The pet name
 	 */
-	public function getName() {
+	public function getName(): string {
 		return "OcelotPet";
 	}
 
@@ -40,7 +40,7 @@ class OcelotPet extends Pets {
 	 *
 	 * @return integer The speed of the pet
 	 */
-	public function getSpeed() {
+	public function getSpeed(): integer {
 		return 1.4;
 	}
 
